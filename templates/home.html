@@ -24,7 +24,7 @@
 
   
 <div class="container">
-  <h2>Carousel Example</h2>
+  <h2>Prooducts for sale</h2>
   <div id="myCarousel" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->
     <ol class="carousel-indicators">
@@ -39,20 +39,20 @@
     <div class="carousel-inner">
 
       <div class="item active">
-        <img src="{{ first.img }}" style="width:100%;">
+        <img src="{{ first[2] }}" style="width:100%;">
         <div class="carousel-caption">
-          <h3>First phones {{ first.header }}</h3>
-          <p> desc {{ first.desc }}!</p>
+          <h3>First phones {{ first[0] }}</h3>
+          <p> desc {{ first[1] }}!</p>
         </div>
       </div>
 
       
       {% for phone in phones %}
       <div class="item">
-        <img src="{{ phone.img }}" style="width:100%;">
+        <img src="{{ phone[2] }}" style="width:100%;">
         <div class="carousel-caption">
-          <h3>{{ phone.header }}</h3>
-          <p> {{ phone.desc }}</p>
+          <h3>{{ phone[0] }}</h3>
+          <p> {{ phone[1] }}</p>
         </div>
       </div>
       {% endfor %}
