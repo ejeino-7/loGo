@@ -11,7 +11,7 @@ def index():
     phones = []
     while(i < 4):
         phones.append(["head"+i, "desc"+i, "https://i.ebayimg.com/images/g/ln4AAOSwkvFaXmcn/s-l400.jpg"])
-        i++
+        i += 1
         
     return render_template('/home.html', first = first, phones = phones)
 
