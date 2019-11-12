@@ -5,6 +5,6 @@
 # This is only a school project. 
 
 
-# If this offends anyone or we violate any laws with this project please contact us at davsde-7@student.ltu.se
+# If this offends anyone or if we violate any laws with this project please contact us at davsde-7@student.ltu.se
 
 
