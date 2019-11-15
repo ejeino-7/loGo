@@ -28,5 +28,19 @@ def register():
 def addProduct():
     return render_template('addProduct.html')
 
+
+@app.route('/product')
+def product():
+    i = 0
+    phones = []
+    # creates dummy phones
+    while(i < 18):
+        phones.append(["nokia 33 fucking 10", "descprigasd thone is fucking nice juuu", "https://i.ebayimg.com/images/g/ln4AAOSwkvFaXmcn/s-l400.jpg"])
+        i += 1
+
+    return render_template('/product.html', products = phones)
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)
