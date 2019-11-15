@@ -41,6 +41,9 @@
                                 <th>Price</th>
                             </tr>
                         </thead>
+                        {% if numSold == 0 %}
+                        <td>No sold products yet.</td>
+                        {% endif %}
                         {% for phone in soldPhones %}
                         <tbody>
                             <tr>
@@ -63,6 +66,9 @@
                                 <th>Price</th>
                             </tr>
                         </thead>
+                        {% if numBought == 0 %}
+                        <td>No bought products yet.</td>
+                        {% endif %}
                         {% for phone in boughtPhones %}
                         <tbody>
                             <tr>
