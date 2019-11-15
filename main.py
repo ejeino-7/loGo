@@ -107,9 +107,6 @@ def logout():
     flash('You are now logged out', 'success')
     return redirect(url_for('login'))
 
-@app.route('/register')
-def register():
-    return render_template('register.html')
 
 @app.route('/addProduct')
 def addProduct():
