@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Exo+2&display=swap" rel="stylesheet">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+  <title>loGo</title>
+
+
+</head>
+
+<body>
+
+{% include 'navigation_meny.html' %}
+
+<div class="container-fluid">
+
+  {% for phone in shoppingcart %}
+
+    <div class="col-xs-4" style="background-color:gray; margin-bottom:5px; height: 60px; text-align: center; vertical-align:middle;"> {{ phone[0] }}</div>
+    <div class="col-xs-3" style="background-color:green; margin-bottom:5px; height: 60px; vertical-align:middle;"> {{ phone[1] }}</div>
+    <a href="/shoppingcart/remove/userid;prodid;" class="col-xs-2" style="background-color:red; margin-bottom:5px; height: 60px; vertical-align:middle;"> remove </a>
+
+  {% endfor %}
+
+
+</div>
+{% if lenght != 0 %}
+  <div style="padding-left:20%;">
+    <button type="button" name="button" style="width:40%; height:40px; text-align=center; background-color:green;">Buy all/ one/ some</button>
+  </div>
+{% endif %}
+
+
+</body>
+</html>
