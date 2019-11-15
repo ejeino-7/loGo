@@ -40,7 +40,7 @@ def register():
         cur = mysql.connection.cursor()
 
         # Execute query
-        cur.execute("INSERT INTO users(email, phone, password) VALUES(%s, %s, %s)", (email, phone, password))
+        cur.execute("INSERT INTO users(email, phoneNumber, password) VALUES(%s, %s, %s)", (email, phone, password))
 
         # Commit to DB
         mysql.connection.commit()
