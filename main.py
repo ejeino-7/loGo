@@ -24,5 +24,9 @@ def login():
 def register():
     return render_template('register.html')
 
+@app.route('/addProduct')
+def addProduct():
+    return render_template('addProduct.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
