@@ -28,6 +28,31 @@ def index():
         
     return render_template('/home.html', first = first, phones = phones)
 
+# User Register
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        email = request.form['email']
+        phone = request.form['phone']
+        password = sha256_crypt.encrypt(str(request.form['password']))
+
+        # Create cursor
+        cur = mysql.connection.cursor()
+
+        # Execute query
+        cur.execute("INSERT INTO users(email, phone, password) VALUES(%s, %s, %s)", (email, phone, password))
+
+        # Commit to DB
+        mysql.connection.commit()
+
+        # Close connection
+        cur.close()
+
+        flash('You are now registered and can log in', 'success')
+
+        return redirect(url_for('login'))
+    return render_template('register.html', form=form)
+
 # User login
 @app.route('/login', methods=['GET', 'POST'])
 def login():
