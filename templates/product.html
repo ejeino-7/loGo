@@ -1,0 +1,39 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Exo+2&display=swap" rel="stylesheet">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+  <title>loGo</title>
+
+
+</head>
+
+<body>
+
+{% include 'navigation_meny.html' %}
+
+<div class="container-fluid">
+
+  {% for phone in products %}
+
+  <div class="col-sm-6">
+
+    <img src="{{ phone[2] }}" style="max-width:150px;">
+    <h3>{{ phone[0] }}</h3>
+    <p> {{ phone[1] }}</p>
+
+  </div>
+
+  {% endfor %}
+
+
+</div>
+
+
+
+</body>
+</html>
