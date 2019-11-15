@@ -144,13 +144,13 @@ def transactions():
     j = 0
     sold = []
     bought = []
-    while (i<5):
-        sold.append(["Nokia 3310", "blöp blöp", "11kr"])
-        i+=1
+    #while (i<5):
+    #    sold.append(["Nokia 3310", "blöp blöp", "11kr"])
+    #    i+=1
     while (j<5):
         bought.append(["Nokia 3310", "blöp blöp", "11kr"])
         j+=1
-    return render_template('transactions.html', soldPhones = sold, boughtPhones = bought)
+    return render_template('transactions.html', soldPhones = sold, boughtPhones = bought, numSold = len(sold), numBought = len(bought))
 
 if __name__ == '__main__':
     app.run(debug=True)
