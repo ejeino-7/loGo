@@ -102,6 +102,16 @@ def product():
 
     return render_template('/product.html', products = phones)
 
+@app.route('/shoppingcart')
+def shoppingcart():
+    i = 0
+    cartitems = []
+    # creates dummy phones
+    while(i < 8):
+        cartitems.append(["nokia 33 10", "199 kr"])
+        i += 1
+
+    return render_template('/shoppingcart.html', shoppingcart = cartitems)
 
 
 if __name__ == '__main__':
