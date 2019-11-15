@@ -1,8 +1,21 @@
 # -*- coding: utf-8 -*-
 
-from flask import Flask, render_template
+from flask import Flask, render_template, flash, redirect, url_for, session, request, logging
+from flask_mysqldb import MySQL
+from wtforms import Form, StringField, TextAreaField, PasswordField, validators
+from passlib.hash import sha256_crypt
+from functools import wraps
 
 app = Flask(__name__)
+
+# Config MySQL
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'jesper'
+app.config['MYSQL_PASSWORD'] = 'admin'
+app.config['MYSQL_DB'] = 'D0018E'
+app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
+# init MYSQL
+mysql = MySQL(app)
 
 @app.route('/')
 def index():
@@ -15,10 +28,59 @@ def index():
         
     return render_template('/home.html', first = first, phones = phones)
 
-
-@app.route('/login')
+# User login
+@app.route('/login', methods=['GET', 'POST'])
 def login():
+    if request.method == 'POST':
+        # Getting Form Fields
+        email = request.form['email']
+        password_cand = request.form['password']
+        
+        cur = mysql.connection.cursor()
+        
+        result = cur.execute("SELECT * FROM users WHERE email = %s", [email])
+        
+        if result > 0:
+            
+            data = cur.fetchone()
+            password = data['password']
+            
+            if sha256_crypt.verify(password_candidate, password):
+                # Passed
+                session['logged_in'] = True
+                session['username'] = username
+
+                flash('You are now logged in', 'success')
+                return redirect(url_for('dashboard'))
+            else:
+                error = 'Invalid login'
+                return render_template('login.html', error=error)
+            # Close connection
+            cur.close()
+        else:
+            error = 'Username not found'
+            return render_template('login.html', error=error)
+
     return render_template('login.html')
+
+# Check if user is logged in
+def is_logged_in(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if 'logged_in' in session:
+            return f(*args, **kwargs)
+        else:
+            flash('Unauthorized, Please login', 'danger')
+            return redirect(url_for('login'))
+    return wrap
+
+# Logout
+@app.route('/logout')
+@is_logged_in
+def logout():
+    session.clear()
+    flash('You are now logged out', 'success')
+    return redirect(url_for('login'))
 
 @app.route('/register')
 def register():
