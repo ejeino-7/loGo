@@ -111,7 +111,7 @@ def shoppingcart():
         cartitems.append(["nokia 33 10", "199 kr"])
         i += 1
 
-    return render_template('/shoppingcart.html', shoppingcart = cartitems)
+    return render_template('/shoppingcart.html', shoppingcart = cartitems, lenght= len(cartitems))
 
 
 if __name__ == '__main__':
