@@ -7,11 +7,13 @@ from werkzeug.utils import secure_filename
 from passlib.hash import sha256_crypt
 from functools import wraps
 import os
+import datetime
+from datetime import datetime
 
 app = Flask(__name__)
  
 # Init stuff
-UPLOAD_FOLDER = '/static/images'
+UPLOAD_FOLDER = os.path.dirname(os.path.abspath(__file__)) + '/static/images/'
 mysql = MySQL(app)
 ALLOWED_EXTENSIONS = set(['png'])
 
@@ -125,20 +127,25 @@ def addProduct():
         # Create cursor
         cur = mysql.connection.cursor()
         
-        userID = cur.execute("SELECT userID FROM users WHERE email = %s", (session['email']))
+        userID = cur.execute("SELECT userID FROM users WHERE email = %s", [session['email']])
 
         # Execute query
-        cur.execute("INSERT INTO products (ownerID, title, desc, price, date_added) VALUES(%s, %s, %s, %s, %s)", (userID, title, desc, price, NOW()))
+        now = datetime.now()
+        cur.execute("INSERT INTO products(ownerID, title, `desc`, price, date_added) VALUES(%s, %s, %s, %s, %s ) ", (userID, title, desc, int(price), now ))
         # Commit to DB
         mysql.connection.commit()
 
         # Upload image to server
-        productID = cur.execute("SELECT MAX(productID) FROM products WHERE ownerID = %s", (userID))
+        cur.execute("SELECT MAX(productID) FROM products WHERE ownerID = %s", [userID])
+        res = cur.fetchone()
+        productID = res['MAX(productID)']
+
         filename = str(userID) + "_" + str(productID) + ".png"
-        url = "/static/images/" + filename 
+        url = "/static/images/" + filename
+
         cur.execute("UPDATE products SET image=%s WHERE productID=%s;", (url, productID))
-        image.save(os.path.join(app.config[UPLOAD_FOLDER], filename))
-       
+        image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        mysql.connection.commit()
         # Close connection
         cur.close()
 
