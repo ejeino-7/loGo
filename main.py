@@ -76,7 +76,7 @@ def login():
                 session['email'] = email
 
                 flash('You are now logged in', 'success')
-                return redirect(url_for('/'))
+                return redirect(url_for('product'))
             else:
                 error = 'Invalid login'
                 return render_template('login.html', error=error)
@@ -86,7 +86,7 @@ def login():
             error = 'Username not found'
             return render_template('login.html', error=error)
 
-    return render_template('login.html')
+    return render_template('login')
 
 # Check if user is logged in
 def is_logged_in(f):
