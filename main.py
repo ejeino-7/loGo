@@ -86,7 +86,7 @@ def login():
             error = 'Username not found'
             return render_template('login.html', error=error)
 
-    return render_template('login')
+    return render_template('login.html')
 
 # Check if user is logged in
 def is_logged_in(f):
