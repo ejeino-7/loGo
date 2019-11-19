@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Exo+2&display=swap" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <title>My products</title>
+  </head>
+  <body>
+
+
+    {% include 'navigation_meny.html' %}
+
+    <div class="container-fluid">
+      <h1 style="text-align:center;"class="h3 mb-3 font-weight-normal"><b>My products</b></h1>
+      <p style="margin-top: 0.5em; text-align: center;"> <a href="/addProduct">Add product</a></p>
+
+      {% for phone in products %}
+
+      <div class="col-sm-6">
+
+        <img src="{{ phone[2] }}" style="max-width:150px;">
+        <h3>{{ phone[0] }}</h3>
+        <p> {{ phone[1] }}</p>
+        <p> {{ phone[3] }}</p>
+        <!-- Button -->
+        <div class="form-group" style="float: left;">
+          <label class="col-md-4 control-label" for="edit"></label>
+          <div class="col-md-4">
+            <button id="edit" name="edit" class="btn btn-primary" onclick="location.href='/editProduct'">Edit</button>
+          </div>
+        </div>
+
+      </div>
+
+      {% endfor %}
+
+
+    </div>
+
+  </body>
+</html>
