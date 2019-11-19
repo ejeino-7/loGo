@@ -9,6 +9,11 @@ from functools import wraps
 import os
 
 app = Flask(__name__)
+ 
+# Init stuff
+UPLOAD_FOLDER = '/static/images'
+mysql = MySQL(app)
+ALLOWED_EXTENSIONS = set(['png'])
 
 # Config MySQL and othes
 app.config['MYSQL_HOST'] = 'localhost'
@@ -17,11 +22,6 @@ app.config['MYSQL_PASSWORD'] = 'admin'
 app.config['MYSQL_DB'] = 'D0018E'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
-# init MYSQL and others
-UPLOAD_FOLDER = '/static/images'
-ALLOWED_EXTENSIONS = set(['png'])
-mysql = MySQL(app)
 
 @app.route('/')
 def index():
@@ -120,26 +120,30 @@ def addProduct():
         title = request.form['title']
         desc = request.form['desc']
         price = request.form['price']
-        image = request.files['image']
-
-        # Upload image to server
-        image.save(os.path.join(app.config[UPLOAD_FOLDER], ))
+        image = request.files['image'] 
 
         # Create cursor
         cur = mysql.connection.cursor()
+        
+        userID = cur.execute("SELECT userID FROM users WHERE email = %s", (session['email']))
 
         # Execute query
-        cur.execute("INSERT INTO users(email, phoneNumber, password) VALUES(%s, %s, %s)", (email, phone, password))
-
+        cur.execute("INSERT INTO products (ownerID, title, desc, price, date_added) VALUES(%s, %s, %s, %s, %s)", (userID, title, desc, price, NOW()))
         # Commit to DB
         mysql.connection.commit()
 
+        # Upload image to server
+        productID = cur.execute("SELECT MAX(productID) FROM products WHERE ownerID = %s", (userID))
+        filename = str(userID) + "_" + str(productID) + ".png"
+        url = "/static/images/" + filename 
+        cur.execute("UPDATE products SET image=%s WHERE productID=%s;", (url, productID))
+        image.save(os.path.join(app.config[UPLOAD_FOLDER], filename))
+       
         # Close connection
         cur.close()
 
-        flash('You are now registered and can log in', 'success')
 
-        return redirect(url_for('login'))
+        return redirect(url_for('myProducts'))
     return render_template('addProduct.html')
 
 
