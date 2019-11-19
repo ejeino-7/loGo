@@ -149,6 +149,20 @@ def transactions():
         j+=1
     return render_template('transactions.html', soldPhones = sold, boughtPhones = bought, numSold = len(sold), numBought = len(bought))
 
+@app.route('/myProducts')
+def myProducts():
+    i = 0
+    phones = []
+    # creates dummy phones
+    while(i < 2):
+        phones.append(["nokia 3310", "beskrivning lala", "https://i.ebayimg.com/images/g/ln4AAOSwkvFaXmcn/s-l400.jpg", "2kr"])
+        i += 1
+    return render_template('/myProducts.html', products = phones)
+
+@app.route('/editProduct')
+def editProduct():
+    return render_template('/editProduct.html')
+
 if __name__ == '__main__':
     app.secret_key = 'THISISTHEKEY'
     app.run(debug=True)
