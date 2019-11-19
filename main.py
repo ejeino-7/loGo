@@ -150,4 +150,5 @@ def transactions():
     return render_template('transactions.html', soldPhones = sold, boughtPhones = bought, numSold = len(sold), numBought = len(bought))
 
 if __name__ == '__main__':
+    app.secret_key = 'THISISTHEKEY'
     app.run(debug=True)
