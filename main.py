@@ -70,7 +70,7 @@ def login():
             data = cur.fetchone()
             password = data['password']
             
-            if sha256_crypt.verify(password_candidate, password):
+            if sha256_crypt.verify(password_cand, password):
                 # Passed
                 session['logged_in'] = True
                 session['username'] = username
