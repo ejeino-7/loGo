@@ -3,18 +3,24 @@
 from flask import Flask, render_template, flash, redirect, url_for, session, request, logging
 from flask_mysqldb import MySQL
 from wtforms import Form, StringField, TextAreaField, PasswordField, validators
+from werkzeug.utils import secure_filename
 from passlib.hash import sha256_crypt
 from functools import wraps
+import os
 
 app = Flask(__name__)
 
-# Config MySQL
+# Config MySQL and othes
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'jesper'
 app.config['MYSQL_PASSWORD'] = 'admin'
 app.config['MYSQL_DB'] = 'D0018E'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
-# init MYSQL
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+# init MYSQL and others
+UPLOAD_FOLDER = '/static/images'
+ALLOWED_EXTENSIONS = set(['png'])
 mysql = MySQL(app)
 
 @app.route('/')
@@ -25,7 +31,7 @@ def index():
     while(i < 4):
         phones.append(["head", "desc", "https://i.ebayimg.com/images/g/ln4AAOSwkvFaXmcn/s-l400.jpg"])
         i += 1
-        
+
     return render_template('/home.html', first = first, phones = phones)
 
 # User Register
@@ -60,16 +66,16 @@ def login():
         # Getting Form Fields
         email = request.form['email']
         password_cand = request.form['password']
-        
+
         cur = mysql.connection.cursor()
-        
+
         result = cur.execute("SELECT * FROM users WHERE email = %s", [email])
-        
+
         if result > 0:
-            
+
             data = cur.fetchone()
             password = data['password']
-            
+
             if sha256_crypt.verify(password_cand, password):
                 # Passed
                 session['logged_in'] = True
@@ -110,6 +116,30 @@ def logout():
 
 @app.route('/addProduct')
 def addProduct():
+    if request.method == 'POST':
+        title = request.form['title']
+        desc = request.form['desc']
+        price = request.form['price']
+        image = request.files['image']
+
+        # Upload image to server
+        image.save(os.path.join(app.config[UPLOAD_FOLDER], ))
+
+        # Create cursor
+        cur = mysql.connection.cursor()
+
+        # Execute query
+        cur.execute("INSERT INTO users(email, phoneNumber, password) VALUES(%s, %s, %s)", (email, phone, password))
+
+        # Commit to DB
+        mysql.connection.commit()
+
+        # Close connection
+        cur.close()
+
+        flash('You are now registered and can log in', 'success')
+
+        return redirect(url_for('login'))
     return render_template('addProduct.html')
 
 
@@ -145,7 +175,7 @@ def transactions():
     #    sold.append(["Nokia 3310", "blöp blöp", "11kr"])
     #    i+=1
     while (j<5):
-        bought.append(["Nokia 3310", "blöp blöp", "11kr"])
+        bought.append(["Nokia 3310", "blop blop", "11kr"])
         j+=1
     return render_template('transactions.html', soldPhones = sold, boughtPhones = bought, numSold = len(sold), numBought = len(bought))
 
