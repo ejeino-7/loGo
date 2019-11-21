@@ -145,7 +145,7 @@ def addProduct():
         mysql.connection.commit()
 
         # Upload image to server
-        cur.execute("SELECT MAX(productID) FROM products WHERE ownerID = %s", [session['userID'])
+        cur.execute("SELECT MAX(productID) FROM products WHERE ownerID = %s", [session['userID']])
         res = cur.fetchone()
         productID = res['MAX(productID)']
 
