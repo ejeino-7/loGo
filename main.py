@@ -27,14 +27,21 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/')
 def index():
-    first = ["head", "desc", "https://i.ebayimg.com/images/g/ln4AAOSwkvFaXmcn/s-l400.jpg"]
-    i = 0
-    phones = []
-    while(i < 4):
-        phones.append(["head", "desc", "https://i.ebayimg.com/images/g/ln4AAOSwkvFaXmcn/s-l400.jpg"])
-        i += 1
+ 
+     # Get 5 phones from products
+    cur = mysql.connection.cursor()
+
+    cur.execute("SELECT * FROM products ORDER BY UNIX_TIMESTAMP(date_added) DESC LIMIT 5;")
+
+    data = cur.fetchall()
+
+    cur.close()
+
+    first = data[0]
+    phones = data[1:]
 
     return render_template('/home.html', first = first, phones = phones)
+ 
 
 # User Register
 @app.route('/register', methods=['GET', 'POST'])
