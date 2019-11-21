@@ -82,6 +82,10 @@ def login():
                 # Passed
                 session['logged_in'] = True
                 session['email'] = email
+                cur.execute("SELECT userID FROM users WHERE email = %s", [session['email']])
+                res = cur.fetchone()
+                userID = res['userID']
+                session['userID'] = userID
 
                 flash('You are now logged in', 'success')
                 return redirect(url_for('products'))
@@ -128,13 +132,9 @@ def addProduct():
         # Create cursor
         cur = mysql.connection.cursor()
         
-        cur.execute("SELECT userID FROM users WHERE email = %s", [session['email']])
-        res = cur.fetchone()
-        userID = res['userID']
-        
         # Execute query
         now = datetime.now()
-        cur.execute("INSERT INTO products(ownerID, title, `desc`, price, date_added) VALUES(%s, %s, %s, %s, %s ) ", (userID, title, desc, int(price), now ))
+        cur.execute("INSERT INTO products(ownerID, title, `desc`, price, date_added) VALUES(%s, %s, %s, %s, %s ) ", (session['userID'], title, desc, int(price), now ))
         # Commit to DB
         mysql.connection.commit()
 
@@ -159,6 +159,11 @@ def addProduct():
 
 @app.route('/products')
 def products():
+    
+           
+           
+           
+           
     i = 0
     phones = []
     # creates dummy phones
@@ -207,11 +212,6 @@ def myProducts():
 def editProduct():
     return render_template('/editProduct.html')
 
-@app.route('/review', methods=['GET', 'POST'])
-def review():
-    return render_template('/review.html')
-           
-      
 if __name__ == '__main__':
     app.secret_key = 'THISISTHEKEY'
     app.run(debug=True)
