@@ -20,9 +20,9 @@
 
       {% for phone in products %}
 
-      <div class="col-sm-6">
+      <div class="col-sm-3">
 
-        <img src="{{ phone[2] }}" style="max-width:150px;">
+        <img src="{{ phone[2] }}" style="max-width:200px;">
         <h3>{{ phone[0] }}</h3>
         <p> {{ phone[1] }}</p>
         <p> {{ phone[3] }}</p>
@@ -34,12 +34,17 @@
           </div>
         </div>
 
-      </div>
 
+      </div>
       {% endfor %}
 
-
     </div>
+
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
 
   </body>
 </html>
