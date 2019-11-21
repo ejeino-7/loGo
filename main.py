@@ -145,11 +145,11 @@ def addProduct():
         mysql.connection.commit()
 
         # Upload image to server
-        cur.execute("SELECT MAX(productID) FROM products WHERE ownerID = %s", [userID])
+        cur.execute("SELECT MAX(productID) FROM products WHERE ownerID = %s", [session['userID'])
         res = cur.fetchone()
         productID = res['MAX(productID)']
 
-        filename = str(userID) + "_" + str(productID) + ".png"
+        filename = str(session['userID']) + "_" + str(productID) + ".png"
         url = "/static/images/" + filename
 
         cur.execute("UPDATE products SET image=%s WHERE productID=%s;", (url, productID))
