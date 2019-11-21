@@ -84,7 +84,7 @@ def login():
                 session['email'] = email
 
                 flash('You are now logged in', 'success')
-                return redirect(url_for('product'))
+                return redirect(url_for('products'))
             else:
                 error = 'Invalid login'
                 return render_template('login.html', error=error)
@@ -116,7 +116,8 @@ def logout():
     return redirect(url_for('login'))
 
 
-@app.route('/addProduct')
+@app.route('/add
+           ')
 def addProduct():
     if request.method == 'POST':
         title = request.form['title']
@@ -156,8 +157,8 @@ def addProduct():
     return render_template('addProduct.html')
 
 
-@app.route('/product')
-def product():
+@app.route('/products')
+def products():
     i = 0
     phones = []
     # creates dummy phones
@@ -165,7 +166,7 @@ def product():
         phones.append(["nokia 33 fucking 10", "descprigasd thone is fucking nice juuu", "https://i.ebayimg.com/images/g/ln4AAOSwkvFaXmcn/s-l400.jpg"])
         i += 1
 
-    return render_template('/product.html', products = phones)
+    return render_template('/products.html', products = phones)
 
 @app.route('/shoppingcart')
 def shoppingcart():
