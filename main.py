@@ -217,16 +217,24 @@ def editProduct():
 def review():
     return render_template('/review.html')
  
-@app.route('/product')
-def product():
-    phones = []
-    phones.append(["https://i.ebayimg.com/images/g/ln4AAOSwkvFaXmcn/s-l400.jpg", "Nokia 3310", "beskrivning beskrivning beskrivning beskrivningbeskrivning beskrivningbeskrivning beskrivningbeskrivning beskrivningbeskrivning beskrivningbeskrivning beskrivningbeskrivning beskrivning", "770kr"])
+@app.route('/product/<string:id>/')
+def product(id):
+
+
+    cur = mysql.connection.cursor()
+
+    cur.execute("SELECT * FROM products WHERE productID =%s LIMIT 1;", [int(id)])
+
+    product = cur.fetchone()
+
+    cur.close()
+
     reviews = []
     i=0
     while (i<8):
         reviews.append(["best guy ever", "1"])
         i += 1
-    return render_template('/product.html', products = phones, rates = reviews)
+    return render_template('/product.html', phone = product, rates = reviews)
 
 if __name__ == '__main__':
     app.secret_key = 'THISISTHEKEY'
