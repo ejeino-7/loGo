@@ -127,8 +127,7 @@ def logout():
     return redirect(url_for('login'))
 
 
-@app.route('/add
-           ')
+@app.route('/add')
 def addProduct():
     if request.method == 'POST':
         title = request.form['title']
