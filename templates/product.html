@@ -26,7 +26,7 @@
         <h1 style="text-align:center;"class="h3 mb-3 font-weight-normal"><b>{{ phone[1] }}</b></h1>
         <img src="{{ phone[0] }}" style="max-width:400px;">
         <br />
-        <textarea cols ="50" rows ="4"> {{ phone[2] }}</textarea>
+        <textarea cols ="50" rows ="4" readonly> {{ phone[2] }}</textarea>
         <br />
         <h1>{{ phone[3] }}</h1>
       {% endfor %}
@@ -47,7 +47,7 @@
     {% for rate in rates %}
     Rate: {{ rate[1] }}
     <br />
-    <textarea cols ="50" rows="3">{{ rate[0] }}</textarea>
+    <textarea cols ="50" rows="3" readonly>{{ rate[0] }}</textarea>
     <br />
     <br />
     <br />
