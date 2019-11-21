@@ -165,19 +165,14 @@ def addProduct():
 
 @app.route('/products')
 def products():
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM products;")
     
-           
-           
-           
-           
-    i = 0
-    phones = []
-    # creates dummy phones
-    while(i < 18):
-        phones.append(["nokia 33 fucking 10", "descprigasd thone is fucking nice juuu", "https://i.ebayimg.com/images/g/ln4AAOSwkvFaXmcn/s-l400.jpg"])
-        i += 1
-
-    return render_template('/products.html', products = phones)
+    products = cur.fetchall()
+    
+    cur.close()
+    
+    return render_template('/products.html', products = products)
 
 @app.route('/shoppingcart')
 def shoppingcart():
