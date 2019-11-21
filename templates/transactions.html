@@ -39,6 +39,7 @@
                                 <th>Product</th>
                                 <th>Sold to</th>
                                 <th>Price</th>
+                                <th></th>
                             </tr>
                         </thead>
                         {% if numSold == 0 %}
@@ -50,6 +51,14 @@
                                 <td>{{ phone[0] }}</td>
                                 <td>{{ phone[1] }}</td>
                                 <td>{{ phone[2] }}</td>
+                                <td>
+                                <div class="form-group" style="float: left;">
+                                  <label class="col-md-4 control-label" for="edit"></label>
+                                  <div class="col-md-4">
+                                    <button id="review" name="review" class="btn btn-primary" onclick="location.href='/review'">Leave review</button>
+                                  </div>
+                                </div>
+                                </td>
                             </tr>
                         </tbody>
                         {% endfor %}
