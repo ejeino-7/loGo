@@ -1,3 +1,4 @@
+
 <!doctype html>
 
 <html lang="en">
@@ -5,24 +6,24 @@
   <meta charset="utf-8">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <link href="https://fonts.googleapis.com/css?family=Exo+2&display=swap" rel="stylesheet">
-  
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-  
+
   <title>loGo</title>
 
 
 </head>
 
 <body>
-  
+
 {% include 'navigation_meny.html' %}
 
 <div class="jumbotron">
   <img src="static/loGo7.png" width = 100%>
 </div>
 
-  
+
 <div class="container" style="padding-bottom:80px; max-width:450px; z-index:1">
   <h2>Prooducts for sale</h2>
   <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -39,24 +40,26 @@
     <div class="carousel-inner">
 
       <div class="item active">
-        <img src="{{ first[2] }}" style="width:100%;">
+        <img src="{{ first.image }}" style="width:100%;">
         <div class="carousel-caption">
-          <h3>First phones {{ first[0] }}</h3>
-          <p> desc {{ first[1] }}!</p>
+          <h3>{{ first.title }}</h3>
+          <p> {{ first.desc }}!</p>
+          <p> {{ first.price }} </p>
         </div>
       </div>
 
-      
+
       {% for phone in phones %}
       <div class="item">
-        <img src="{{ phone[2] }}" style="width:100%;">
+        <img src="{{ phone.image }}" style="width:100%;">
         <div class="carousel-caption">
-          <h3>{{ phone[0] }}</h3>
-          <p> {{ phone[1] }}</p>
+          <h3>{{ phone.title }}</h3>
+          <p> {{ phone.desc }}</p>
+          <p> {{ phone.price }} </p>
         </div>
       </div>
       {% endfor %}
-      
+
     </div>
 
     <!-- Left and right controls -->
@@ -70,9 +73,9 @@
     </a>
   </div>
 </div>
-  
-  
- 
+
+
+
 
 
 
