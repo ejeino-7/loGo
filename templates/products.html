@@ -15,24 +15,31 @@
 
 <body>
 
-{% include 'navigation_meny.html' %}
-
 <div class="container-fluid">
+  <h1 style="text-align:center;"class="h3 mb-3 font-weight-normal"><b>Products for sale</b></h1>
 
   {% for phone in products %}
 
-  <div class="col-sm-6">
+  <div class="col-sm-4">
 
     <img src="{{ phone[2] }}" style="max-width:150px;">
     <h3>{{ phone[0] }}</h3>
     <p> {{ phone[1] }}</p>
+    <div class="form-group" style="float: left;">
+      <label class="col-md-4 control-label" for="view"></label>
+      <div class="col-md-4">
+        <button id="view" name="view" class="btn btn-primary" onclick="location.href='/product'">View product</button>
+      </div>
+    </div>
 
   </div>
 
   {% endfor %}
 
-
 </div>
+<br />
+<br />
+<br />
 
 
 
