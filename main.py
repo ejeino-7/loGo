@@ -207,6 +207,11 @@ def myProducts():
 def editProduct():
     return render_template('/editProduct.html')
 
+@app.route('/review', methods=['GET', 'POST'])
+def review():
+    return render_template('/review.html')
+           
+      
 if __name__ == '__main__':
     app.secret_key = 'THISISTHEKEY'
     app.run(debug=True)
