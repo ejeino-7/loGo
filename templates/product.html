@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Exo+2&display=swap" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+    <title>View product</title>
+  </head>
+  <body>
+    {% include 'navigation_meny.html' %}
+    <center>
+    <div class="container-fluid" position ="center">
+      <div class="form-group" style="float: center;">
+        <label class="col-md-4 control-label" for="edit"></label>
+        <div class="col-md-4">
+          <button id="back" name="back" class="btn btn-primary" onclick="location.href='/products'">Back to products</button>
+        </div>
+      </div>
+      <br />
+      {% for phone in products %}
+        <h1 style="text-align:center;"class="h3 mb-3 font-weight-normal"><b>{{ phone[1] }}</b></h1>
+        <img src="{{ phone[0] }}" style="max-width:400px;">
+        <br />
+        <textarea cols ="50" rows ="4"> {{ phone[2] }}</textarea>
+        <br />
+        <h1>{{ phone[3] }}</h1>
+      {% endfor %}
+      <div class="form-group" style="float: center;">
+        <label class="col-md-4 control-label" for="edit"></label>
+        <div class="col-md-4">
+          <button id="back" name="back" class="btn btn-primary">Add to shoppingcart</button>
+        </div>
+      </div>
+
+    <br />
+    <br />
+    <br />
+
+    <font size ="+2">Average rating of the seller: 3.7/5</font>
+    <br />
+    <br />
+    {% for rate in rates %}
+    Rate: {{ rate[1] }}
+    <br />
+    <textarea cols ="50" rows="3">{{ rate[0] }}</textarea>
+    <br />
+    <br />
+    <br />
+    {% endfor %}
+    <br />
+    <br />
+    <br />
+
+    </div>
+  </center>
+
+
+  </body>
+</html>
