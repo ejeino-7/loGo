@@ -127,8 +127,10 @@ def addProduct():
         # Create cursor
         cur = mysql.connection.cursor()
         
-        userID = cur.execute("SELECT userID FROM users WHERE email = %s", [session['email']])
-
+        cur.execute("SELECT userID FROM users WHERE email = %s", [session['email']])
+        res = cur.fetchone()
+        userID = res['userID']
+        
         # Execute query
         now = datetime.now()
         cur.execute("INSERT INTO products(ownerID, title, `desc`, price, date_added) VALUES(%s, %s, %s, %s, %s ) ", (userID, title, desc, int(price), now ))
