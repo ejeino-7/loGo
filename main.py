@@ -221,6 +221,17 @@ def editProduct():
 @app.route('/review', methods=['GET', 'POST'])
 def review():
     return render_template('/review.html')
+ 
+@app.route('/product')
+def product():
+    phones = []
+    phones.append(["https://i.ebayimg.com/images/g/ln4AAOSwkvFaXmcn/s-l400.jpg", "Nokia 3310", "beskrivning beskrivning beskrivning beskrivningbeskrivning beskrivningbeskrivning beskrivningbeskrivning beskrivningbeskrivning beskrivningbeskrivning beskrivningbeskrivning beskrivning", "770kr"])
+    reviews = []
+    i=0
+    while (i<8):
+        reviews.append(["best guy ever", "1"])
+        i += 1
+    return render_template('/product.html', products = phones, rates = reviews)
 
 if __name__ == '__main__':
     app.secret_key = 'THISISTHEKEY'
