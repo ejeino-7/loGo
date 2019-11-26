@@ -201,7 +201,7 @@ def addToCart(id):
         return('',204)
    
 @app.route('/shoppingcart/remove/<string:id>', methods=['GET', 'POST'])
-def addToCart(id):
+def removeFromCart(id):
     if(session['logged_in']):
 
         cur = mysql.connection.cursor()
@@ -210,8 +210,8 @@ def addToCart(id):
 
         mysql.connection.commit()
         cur.close()
-        return redirect(url_for('shoppingcart')
-        
+        return redirect(url_for('shoppingcart'))
+
     return('',204)
 
                         
