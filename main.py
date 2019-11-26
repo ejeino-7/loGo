@@ -181,8 +181,12 @@ def shoppingcart():
 
     cur = mysql.connection.cursor()
     userID = session['userID']
-    cur.execute("SELECT * FROM shoppingCart WHERE userID = %s", [userID])
+
+    cur.execute("SELECT * FROM products WHERE productID IN (SELECT shoppingCart.productID FROM shoppingCart WHERE userID = %s);", [userID])
+
+
     cartitems = cur.fetchall()
+
     cur.close()
 
     return render_template('/shoppingcart.html', shoppingcart = cartitems, lenght= len(cartitems))
