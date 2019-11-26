@@ -199,8 +199,22 @@ def addToCart(id):
         cur.close()
 
         return('',204)
-       
-       
+   
+@app.route('/shoppingcart/remove/<string:id>', methods=['GET', 'POST'])
+def addToCart(id):
+    if(session['logged_in']):
+
+        cur = mysql.connection.cursor()
+        userID = session['userID']
+        cur.execute("DELETE FROM shoppingCart WHERE userID = %s AND productID = %s ", (userID, int(id)))
+
+        mysql.connection.commit()
+        cur.close()
+        return redirect(url_for('shoppingcart')
+        
+    return('',204)
+
+                        
 @app.route('/transactions')
 def transactions():
     i = 0
