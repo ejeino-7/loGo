@@ -201,12 +201,16 @@ def transactions():
 
 @app.route('/myProducts')
 def myProducts():
-    i = 0
-    phones = []
-    # creates dummy phones
-    while(i < 2):
-        phones.append(["nokia 3310", "beskrivning lala", "https://i.ebayimg.com/images/g/ln4AAOSwkvFaXmcn/s-l400.jpg", "2kr"])
-        i += 1
+    phones = [] ## if emptyyyy..
+    if (session['logged_in'] == True):
+        cur = mysql.connection.cursor()
+        userID = session['userID']
+
+        cur.execute("SELECT * FROM products WHERE ownerID = %s", [userID])
+        phones = cur.fetchall()
+        cur.close()
+
+
     return render_template('/myProducts.html', products = phones)
 
 @app.route('/editProduct')
@@ -236,6 +240,24 @@ def product(id):
         i += 1
     return render_template('/product.html', phone = product, rates = reviews)
 
+   
+@app.route('/delete/<string:id>', methods=['GET', 'POST'])
+def delete(id):
+
+    if (session['logged_in'] == True):
+        cur = mysql.connection.cursor()
+        userID = session['userID']
+        cur.execute("DELETE FROM products WHERE productID = %s AND ownerID = %s", (int(id), userID))
+
+        mysql.connection.commit()
+        cur.close()
+
+        return redirect(url_for('myProducts'))
+
+    return('', 204)
+  
+  
+   
 if __name__ == '__main__':
     app.secret_key = 'THISISTHEKEY'
     app.run(debug=True)
