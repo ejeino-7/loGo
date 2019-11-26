@@ -176,15 +176,31 @@ def products():
 
 @app.route('/shoppingcart')
 def shoppingcart():
-    i = 0
+
     cartitems = []
-    # creates dummy phones
-    while(i < 8):
-        cartitems.append(["nokia 33 10", "199 kr"])
-        i += 1
+
+    cur = mysql.connection.cursor()
+    userID = session['userID']
+    cur.execute("SELECT * FROM shoppingCart WHERE userID = %s", [userID])
+    cartitems = cur.fetchall()
+    cur.close()
 
     return render_template('/shoppingcart.html', shoppingcart = cartitems, lenght= len(cartitems))
 
+@app.route('/addToCart/<string:id>', methods=['GET', 'POST'])
+def addToCart(id):
+    if(session['logged_in']):
+
+        cur = mysql.connection.cursor()
+        userID = session['userID']
+        cur.execute("INSERT INTO shoppingCart(userID, productID) VALUES (%s, %s)", (userID, int(id)))
+
+        mysql.connection.commit()
+        cur.close()
+
+        return('',204)
+       
+       
 @app.route('/transactions')
 def transactions():
     i = 0
