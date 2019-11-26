@@ -17,21 +17,6 @@
 
 {% include 'navigation_meny.html' %}
 
-<div class="container-fluid">
-
-  {% for phone in shoppingcart %}
-
-    <div class="col-xs-4" style="background-color:gray; margin-bottom:5px; height: 60px; text-align: center; vertical-align:middle;"> {{ phone[0] }}</div>
-    <div class="col-xs-3" style="background-color:green; margin-bottom:5px; height: 60px; vertical-align:middle;"> {{ phone[1] }}</div>
-    <a href="/shoppingcart/remove/userid;prodid;" class="col-xs-2" style="background-color:red; margin-bottom:5px; height: 60px; vertical-align:middle;"> remove </a>
-
-  {% endfor %}
-
-
-</div>
-  
-
-
   <div class="container">
     <div class="row">
         <div class="col-xs-10">
@@ -45,7 +30,7 @@
                 <div class="panel-body">
                 </div>
                     <ul class="list-group">
-     
+
                     <li class="list-group-item">
                     <table class="table table-hover">
                         <thead>
@@ -59,13 +44,13 @@
                         {% for phone in shoppingcart %}
                         <tbody>
                             <tr>
-                              <td>{{ phone[0] }}</td>
-                              <td>{{ phone[1] }}</td>
-                              <td><a href="/shoppingcart/remove/{{phone[2]}}/">Remove</a></td>
+                              <td>{{ phone.title }}</td>
+                              <td>{{ phone.price }}</td>
+                              <td><a href="/shoppingcart/remove/{{ phone.id }}/">Remove</a></td>
                             </tr>
                         </tbody>
                         {% endfor %}
-                      
+
                         {% else %}
                           <tr>
                             <td> Shopping cart empty </td>
@@ -77,14 +62,14 @@
             </div>
         </div>
     </div>
-</div>  
-  
+</div>
+
 {% if lenght != 0 %}
   <div style="padding-left:20%;">
     <button type="button" name="button" style="width:40%; height:40px; text-align=center; background-color:green;">Buy all/ one/ some</button>
   </div>
 {% endif %}
-  
+
 
 </body>
 </html>
