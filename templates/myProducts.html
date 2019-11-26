@@ -22,15 +22,18 @@
 
       <div class="col-sm-3">
 
-        <img src="{{ phone[2] }}" style="max-width:200px;">
-        <h3>{{ phone[0] }}</h3>
-        <p> {{ phone[1] }}</p>
-        <p> {{ phone[3] }}</p>
+        <img src="{{ phone.image }}" style="max-width:200px;">
+        <h3>{{ phone.title }}</h3>
+        <p> {{ phone.desc }}</p>
+        <p> {{ phone.date_added }}</p>
         <!-- Button -->
         <div class="form-group" style="float: left;">
           <label class="col-md-4 control-label" for="edit"></label>
           <div class="col-md-4">
-            <button id="edit" name="edit" class="btn btn-primary" onclick="location.href='/editProduct'">Edit</button>
+            <button id="delete" name="delete" class="btn btn-danger" onclick="location.href='/delete/{{ phone.productID }}'">Delete</button>
+          </div>
+          <div class="col-md-4">
+            <button id="edit" name="edit" class="btn btn-primary" onclick="location.href='/editProduct/{{ phone.productID }}'">Edit</button>
           </div>
         </div>
 
