@@ -221,16 +221,15 @@ def removeFromCart(id):
                         
 @app.route('/transactions')
 def transactions():
-    i = 0
-    j = 0
-    sold = []
-    bought = []
-    #while (i<5):
-    #    sold.append(["Nokia 3310", "blöp blöp", "11kr"])
-    #    i+=1
-    while (j<5):
-        bought.append(["Nokia 3310", "blop blop", "11kr"])
-        j+=1
+    if(session['logged_in']):
+        cur = mysql.connection.cursor()
+        userID = session['userID']
+        cur.execute("SELECT * FROM products WHERE ownerID = %s AND buyerID IS NOT NULL", [userID])
+        sold = cur.fetchall()
+        
+        cur.execute("SELECT * FROM products where buyterID = %s", [userID])
+        bought = cur.fetchall()
+        
     return render_template('transactions.html', soldPhones = sold, boughtPhones = bought, numSold = len(sold), numBought = len(bought))
 
 @app.route('/myProducts')
