@@ -281,8 +281,9 @@ def editProduct(id):
 
 
            
-@app.route('/review', methods=['GET', 'POST'])
-def review():
+@app.route('/review/<string:id>', methods=['GET', 'POST'])
+def review(id):
+ 
     return render_template('/review.html')
  
 @app.route('/product/<string:id>/')
