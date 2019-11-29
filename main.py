@@ -191,18 +191,21 @@ def shoppingcart():
 
     return render_template('/shoppingcart.html', shoppingcart = cartitems, lenght= len(cartitems))
 
+   
 @app.route('/addToCart/<string:id>', methods=['GET', 'POST'])
 def addToCart(id):
-    if(session['logged_in']):
-
+    if(session['logged_in']):       
         cur = mysql.connection.cursor()
         userID = session['userID']
-        cur.execute("INSERT IGNORE INTO shoppingCart(userID, productID) VALUES (%s, %s)", (userID, int(id)))
-
+        cur.execute("SELECT * FROM products WHERE productID=%s", [int(id)])
+        price = cur.fetchone();
+      
+        cur.execute("INSERT IGNORE INTO shoppingCart(userID, productID, price) VALUES (%s, %s, %s)", (userID, int(id), price))
         mysql.connection.commit()
         cur.close()
 
         return('',204)
+       
    
 @app.route('/shoppingcart/remove/<string:id>', methods=['GET', 'POST'])
 def removeFromCart(id):
