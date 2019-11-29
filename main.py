@@ -305,7 +305,7 @@ def review(sellerID):
          cur = mysql.connection.cursor()
 
          cur.execute("INSERT INTO grading(graderID, gradedID, grade, comment) VALUES(%s, %s, %s, %s)", (session['userID'], sellerID, rating, review))
-
+         return redirect(url_for('transactions'))
     return render_template('/review.html')
  
 @app.route('/product/<string:id>/')
