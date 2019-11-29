@@ -283,9 +283,17 @@ def editProduct(id):
 
 
            
-@app.route('/review/<string:id>', methods=['GET', 'POST'])
-def review(id):
- 
+@app.route('/review/<string:sellerID>', methods=['GET', 'POST'])
+def review(sellerID):
+    if request.method == 'POST':
+        rating = request.form['rating']
+        review = request.form['review']
+
+         # Create cursor
+         cur = mysql.connection.cursor()
+
+         cur.execute("INSERT INTO grading(graderID, gradedID, grade, comment) VALUES(%s, %s, %s, %s)", [session['userID'], sellerID, rating, review])
+
     return render_template('/review.html')
  
 @app.route('/product/<string:id>/')
