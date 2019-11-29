@@ -292,7 +292,7 @@ def review(sellerID):
          # Create cursor
          cur = mysql.connection.cursor()
 
-         cur.execute("INSERT INTO grading(graderID, gradedID, grade, comment) VALUES(%s, %s, %s, %s)", [session['userID'], sellerID, rating, review])
+         cur.execute("INSERT INTO grading(graderID, gradedID, grade, comment) VALUES(%s, %s, %s, %s)", (session['userID'], sellerID, rating, review))
 
     return render_template('/review.html')
  
