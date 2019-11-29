@@ -247,9 +247,39 @@ def myProducts():
 
     return render_template('/myProducts.html', products = phones)
 
-@app.route('/editProduct')
-def editProduct():
-    return render_template('/editProduct.html')
+
+@app.route('/editProduct/<string:id>', methods=['GET', 'POST'])
+def editProduct(id):
+    if(request.method == 'POST'):
+        if(session['logged_in']):
+            id = int(id)
+
+
+            title = request.form['title']
+            description = request.form['desc']
+            price = request.form['price']
+
+            cur = mysql.connection.cursor()
+            userID = session['userID']
+
+            cur.execute("UPDATE products SET title = %s, `desc` = %s, price = %s WHERE ownerID = %s AND productID = %s;", (title, description, int(price), userID, id))
+
+            mysql.connection.commit()
+            cur.close()
+
+        return redirect(url_for('myProducts'))
+    else:
+        if (session['logged_in'] == True):
+            cur = mysql.connection.cursor()
+            userID = session['userID']
+
+            cur.execute("SELECT * FROM products WHERE ownerID = %s AND productID = %s", (userID, id))
+            phone = cur.fetchone()
+            cur.close()
+
+        return render_template('/editProduct.html', phone = phone)
+
+
            
 @app.route('/review', methods=['GET', 'POST'])
 def review():
