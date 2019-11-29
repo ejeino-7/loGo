@@ -222,7 +222,7 @@ def removeFromCart(id):
    
 @app.route('/buyProducts')
 def buyProducts():
-    if(session['loggeD_in']):
+    if(session['logged_in']):
         cartitems = []
         cur = mysql.connection.cursor()
         userID = session['userID']
@@ -230,6 +230,8 @@ def buyProducts():
         cur.execute("SELECT * FROM products WHERE productID IN (SELECT shoppingCart.productID FROM shoppingCart WHERE userID = %s);", [userID])
 
         cartitems = cur.fetchall()
+        
+        
         cur.close()
 
     return render_template('/shoppingcart.html', shoppingcart = cartitems, length= len(cartitems))
@@ -244,6 +246,7 @@ def transactions():
         
         cur.execute("SELECT * FROM products where buyerID = %s", [userID])
         bought = cur.fetchall()
+        cur.close()
         
     return render_template('transactions.html', soldPhones = sold, boughtPhones = bought, numSold = len(sold), numBought = len(bought))
 
@@ -305,6 +308,8 @@ def review(sellerID):
          cur = mysql.connection.cursor()
 
          cur.execute("INSERT INTO grading(graderID, gradedID, grade, comment) VALUES(%s, %s, %s, %s)", (session['userID'], sellerID, rating, review))
+         mysql.connection.commit()
+         cur.close()
          return redirect(url_for('transactions'))
     return render_template('/review.html')
  
