@@ -189,7 +189,7 @@ def shoppingcart():
 
     cur.close()
 
-    return render_template('/shoppingcart.html', shoppingcart = cartitems, lenght= len(cartitems))
+    return render_template('/shoppingcart.html', shoppingcart = cartitems, length= len(cartitems))
 
    
 @app.route('/addToCart/<string:id>', methods=['GET', 'POST'])
