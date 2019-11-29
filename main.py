@@ -230,7 +230,7 @@ def transactions():
         cur.execute("SELECT * FROM products WHERE ownerID = %s AND buyerID IS NOT NULL", [userID])
         sold = cur.fetchall()
         
-        cur.execute("SELECT * FROM products where buyterID = %s", [userID])
+        cur.execute("SELECT * FROM products where buyerID = %s", [userID])
         bought = cur.fetchall()
         
     return render_template('transactions.html', soldPhones = sold, boughtPhones = bought, numSold = len(sold), numBought = len(bought))
