@@ -172,7 +172,7 @@ def addProduct():
 @app.route('/products')
 def products():
     cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM products WHERE buyerID = NULL;")
+    cur.execute("SELECT * FROM products WHERE buyerID IS NULL;")
     
     products = cur.fetchall()
     
