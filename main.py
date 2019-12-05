@@ -227,14 +227,18 @@ def buyProducts():
         cur = mysql.connection.cursor()
         userID = session['userID']
         
+        cur.execute("START TRANSACTION;")
         cur.execute("SELECT * FROM products WHERE productID IN (SELECT shoppingCart.productID FROM shoppingCart WHERE userID = %s);", [userID])
-
+        cur.execute("COMMIT;")
+        
+        mysql.connection.commit()
+        
         cartitems = cur.fetchall()
         
         
         cur.close()
 
-    return render_template('/shoppingcart.html', shoppingcart = cartitems, length= len(cartitems))
+    return redirect(url_for('transactions'))
                         
 @app.route('/transactions')
 def transactions():
