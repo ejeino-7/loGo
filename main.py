@@ -229,12 +229,18 @@ def buyProducts():
         
         cur.execute("START TRANSACTION;")
         cur.execute("SELECT * FROM products WHERE productID IN (SELECT shoppingCart.productID FROM shoppingCart WHERE userID = %s);", [userID])
+        
+        cartitems = cur.fetchall()
+        now = datetime.now()
+        for item in cartitems: 
+            price = item['price']
+            productID = item['productID']
+            sellerID = items['ownerID']
+            cur.execute("UPDATE products SET (buyerID=%s, date_purchased=%s, price=%s) WHERE productID=%s;", (userID, now, price, productID))
+            cur.execute("INSERT INTO orders(price, productID, buyerID, sellerID) VALUES(%s, %s, %s, %s);", (price, productID, userID, sellerID))
         cur.execute("COMMIT;")
         
         mysql.connection.commit()
-        
-        cartitems = cur.fetchall()
-        
         
         cur.close()
 
