@@ -216,7 +216,7 @@ def addToCart(id):
         mysql.connection.commit()
         cur.close()
 
-        return render_template('/products.html')
+        return redirect(url_for('products'))
        
    
 @app.route('/shoppingcart/remove/<string:id>', methods=['GET', 'POST'])
