@@ -41,13 +41,13 @@
     <br />
     <br />
 
-    <font size ="+2">Average rating of the seller: 3.7/5</font>
+    <font size ="+2">Average rating of the seller: {{ average }}</font>
     <br />
     <br />
     {% for rate in rates %}
-    Rate: {{ rate[1] }}
+    Rate: {{ rate.grade }}
     <br />
-    <textarea cols ="50" rows="3">{{ rate[0] }}</textarea>
+    <textarea cols ="50" rows="3">{{ rate.comment }}</textarea>
     <br />
     <br />
     <br />
