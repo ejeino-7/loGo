@@ -37,8 +37,14 @@ def index():
 
     cur.close()
 
-    first = data[0]
-    phones = data[1:]
+    if(len(data) > 0):
+        first = data[0]
+    else:
+        first = 0
+    if(len(data) > 1):
+        phones = data[1:]
+    else:
+        phones = 0
 
     return render_template('/home.html', first = first, phones = phones)
  
