@@ -40,7 +40,16 @@
     <br />
     <br />
     <br />
-
+      
+    {% if average < 0 %}
+    <font size ="+2">This seller has no ratings</font>
+    <br />
+    <br />
+    <br />
+    {% endfor %}
+    {% endif %}
+      
+    {% else %}
     <font size ="+2">Average rating of the seller: {{ average }}</font>
     <br />
     <br />
@@ -52,6 +61,8 @@
     <br />
     <br />
     {% endfor %}
+    {% endif %}
+      
     <br />
     <br />
     <br />
