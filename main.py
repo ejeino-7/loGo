@@ -244,8 +244,10 @@ def buyProducts():
         
         cartitems = cur.fetchall()
         now = datetime.now()
-        for item in cartitems: 
-            price = item['price']
+        for item in cartitems:
+            cur.execute("SELECT price FROM shoppingCart WHERE userID = %s AND productID = %s;", (userID, item['productID']))
+            res = cur.fetchone()  
+            price = res['price']
             productID = item['productID']
             sellerID = item['ownerID']
             cur.execute("UPDATE products SET buyerID=%s, date_purchased=%s, price=%s WHERE productID=%s;", (userID, now, price, productID))
