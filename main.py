@@ -324,17 +324,22 @@ def product(id):
     cur = mysql.connection.cursor()
 
     cur.execute("SELECT * FROM products WHERE productID =%s LIMIT 1;", [int(id)])
-
     product = cur.fetchone()
+    
+    cur.execute("SELECT * FROM grading WHERE gradedID IN (SELECT products.ownerID FROM products WHERE productID = %s);", [int(id)])
+    reviews = cur.fetchall()
 
+    val = 0
+    count = 0
+    for a in reviews:
+        var += a['grade']
+        count += 1
+
+    averageRate = var/count
+    
     cur.close()
 
-    reviews = []
-    i=0
-    while (i<8):
-        reviews.append(["best guy ever", "1"])
-        i += 1
-    return render_template('/product.html', phone = product, rates = reviews)
+    return render_template('/product.html', phone = product, rates = reviews, average = averageRate)
 
    
 @app.route('/delete/<string:id>', methods=['GET', 'POST'])
