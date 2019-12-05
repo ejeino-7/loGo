@@ -259,7 +259,8 @@ def transactions():
     if(session['logged_in']):
         cur = mysql.connection.cursor()
         userID = session['userID']
-        cur.execute("SELECT * FROM products WHERE ownerID = %s AND buyerID IS NOT NULL", [userID])
+        #cur.execute("SELECT * FROM products WHERE ownerID = %s AND buyerID IS NOT NULL", [userID])
+        cur.execute("SELECT products.title, products.price, users.email FROM products INNER JOIN users ON products.buyerID=users.userID WHERE products.ownerID = %s", [userID])
         sold = cur.fetchall()
         
         #cur.execute("SELECT * FROM products where buyerID = %s", [userID])
