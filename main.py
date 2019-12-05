@@ -31,7 +31,7 @@ def index():
      # Get 5 phones from products
     cur = mysql.connection.cursor()
 
-    cur.execute("SELECT * FROM products ORDER BY UNIX_TIMESTAMP(date_added) DESC LIMIT 5;")
+    cur.execute("SELECT * FROM products WHERE buyerID = NULL ORDER BY UNIX_TIMESTAMP(date_added) DESC LIMIT 5;")
 
     data = cur.fetchall()
 
