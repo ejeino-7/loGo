@@ -203,7 +203,7 @@ def addToCart(id):
     if(session['logged_in']):       
         cur = mysql.connection.cursor()
         userID = session['userID']
-        cur.execute("SELECT * FROM products WHERE productID=%s", [int(id)])
+        cur.execute("SELECT price FROM products WHERE productID=%s", [int(id)])
         price = cur.fetchone();
       
         cur.execute("INSERT IGNORE INTO shoppingCart(userID, productID, price) VALUES (%s, %s, %s)", (userID, int(id), price))
