@@ -238,6 +238,8 @@ def buyProducts():
             sellerID = item['ownerID']
             cur.execute("UPDATE products SET buyerID=%s, date_purchased=%s, price=%s WHERE productID=%s;", (userID, now, price, productID))
             cur.execute("INSERT INTO orders(price, productID, buyerID, sellerID) VALUES(%s, %s, %s, %s);", (price, productID, userID, sellerID))
+            cur.execute("DELETE FROM shoppingCart WHERE productID=%s", (productID))
+        
         cur.execute("COMMIT;")
         
         mysql.connection.commit()
