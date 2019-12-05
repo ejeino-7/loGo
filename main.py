@@ -263,7 +263,7 @@ def transactions():
         sold = cur.fetchall()
         
         #cur.execute("SELECT * FROM products where buyerID = %s", [userID])
-        cur.execute("SELECT products.title, products.price, products.ownerID, users.email FROM products INNER JOIN users ON products.ownerID=users.userID WHERE buyerID = &s", [userID])
+        cur.execute("SELECT products.title, products.price, products.ownerID, users.email FROM products INNER JOIN users ON products.ownerID=users.userID WHERE buyerID = %s", [userID])
         bought = cur.fetchall()
         cur.close()
         
