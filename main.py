@@ -280,7 +280,7 @@ def myProducts():
         cur = mysql.connection.cursor()
         userID = session['userID']
 
-        cur.execute("SELECT * FROM products WHERE ownerID = %s", [userID])
+        cur.execute("SELECT * FROM products WHERE ownerID = %s AND buyerID IS NULL", [userID])
         phones = cur.fetchall()
         cur.close()
 
