@@ -166,7 +166,7 @@ def addProduct():
 @app.route('/products')
 def products():
     cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM products;")
+    cur.execute("SELECT * FROM products WHERE buyerID = NULL;")
     
     products = cur.fetchall()
     
@@ -341,7 +341,10 @@ def product(id):
         var += a['grade']
         count += 1
 
-    averageRate = var/count
+    if(count > 0):
+        averageRate = var/count
+    else:
+        averageRate = 1
     
     cur.close()
 
