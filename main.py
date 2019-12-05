@@ -323,8 +323,8 @@ def editProduct(id):
 @app.route('/review/<string:sellerID>', methods=['GET', 'POST'])
 def review(sellerID):
     if request.method == 'POST':
-        rating = request.form['rating']
-        review = request.form['review']
+         rating = request.form['rating']
+         review = request.form['review']
 
          # Create cursor
          cur = mysql.connection.cursor()
