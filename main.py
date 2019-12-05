@@ -351,13 +351,13 @@ def product(id):
     val = 0
     count = 0
     for a in reviews:
-        var += a['grade']
+        val += a['grade']
         count += 1
 
     if(count > 0):
-        averageRate = var/count
+        averageRate = val/count
     else:
-        averageRate = 1
+        averageRate = -1
     
     cur.close()
 
