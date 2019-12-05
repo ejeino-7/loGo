@@ -190,9 +190,14 @@ def shoppingcart():
 
     cur.execute("SELECT * FROM products WHERE productID IN (SELECT shoppingCart.productID FROM shoppingCart WHERE userID = %s);", [userID])
 
-
     cartitems = cur.fetchall()
 
+    for item in cartitems:
+        cur.execute("SELECT price FROM shoppingCart WHERE userID = %s AND productID = %s;", (userID, item['productID']))
+        res = cur.fetchone()
+        item['price'] = res['price']  
+     
+    
     cur.close()
 
     return render_template('/shoppingcart.html', shoppingcart = cartitems, length= len(cartitems))
