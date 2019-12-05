@@ -317,7 +317,7 @@ def review(sellerID):
          # Create cursor
          cur = mysql.connection.cursor()
 
-         cur.execute("INSERT INTO grading(graderID, gradedID, grade, comment) VALUES(%s, %s, %s, %s)", (session['userID'], sellerID, rating, review))
+         cur.execute("INSERT INTO grading(graderID, gradedID, grade, comment) VALUES(%s, %s, %s, %s)", (session['userID'], sellerID, int(rating), review))
          mysql.connection.commit()
          cur.close()
          return redirect(url_for('transactions'))
