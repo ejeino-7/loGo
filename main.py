@@ -172,29 +172,21 @@ def addProduct():
     return render_template('addProduct.html')
 
 
-@app.route('/products')
-def products():
-    cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM products WHERE buyerID IS NULL;")
-    
-    products = cur.fetchall()
-    
-    cur.close()
-    
-    return render_template('/products.html', products = products)
- 
-@app.route('/products/<string:search>', methods=['GET', 'POST'])
-def search(id):      
+@app.route('/products', methods=['GET', 'POST'])
+def products():        
+    if(request.method == 'POST'):
+        search = request.form['search']
         cur = mysql.connection.cursor()
         cur.execute("SELECT * FROM products WHERE LOCATE(%s, Unit) > 0", [string(search)])
-        price = cur.fetchone();
-      
-        cur.execute("INSERT IGNORE INTO shoppingCart(userID, productID, price) VALUES (%s, %s, %s)", (userID, int(id), price))
-        mysql.connection.commit()
+        container_products = cur.fetchall()
         cur.close()
-
-        return redirect(url_for('products'))
-   
+    else:
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM products WHERE buyerID IS NULL;")
+        products = cur.fetchall()
+        cur.close()
+    return render_template('/products.html', products = container_products)
+    
    
 @app.route('/shoppingcart')
 def shoppingcart():
