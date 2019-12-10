@@ -14,7 +14,23 @@
   </head>
   <body>
 
-    {% include 'navigation_meny.html' %}
+    <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#"><b style='font-family:"Exo 2"; font-size:2em; color:white;'>loGo</b></a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li><a href="/">Home</a></li>
+        <li><a href="/admin/users">Users</a></li>
+        <li><a href="/admin//products">Products</a></li>
+        <li><a href="admin/orders">orders</a></li>
+        <li><a href="/logout">Logout</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/shoppingcart"><span class="glyphicon glyphicon-log-in"></span>CART</a></li>
+      </ul>
+    </div>
+    </nav>
 
     <div class="container">
     <div class="row">
@@ -51,7 +67,7 @@
                                   <div class="form-group" style="float: left;">
                                     <label class="col-md-4 control-label" for="del"></label>
                                     <div class="col-md-4">
-                                      <button id="del" name="del" class="btn btn-primary">Delete user</button>
+                                      <button id="del" name="del" class="btn btn-primaryo" onclick="location.href='/admin/deleteUser{{ userID }}'">Delete user</button>
                                     </div>
                                   </div>
                                 </td>
@@ -110,6 +126,16 @@
         </div>
     </div>
 </div>
+
+<!-- Footer -->
+<footer style="position:fixed; bottom:0; width:100%; z-index:2" class="panel-footer font-small blue">
+<!-- Copyright -->
+<div class="footer-copyright text-center py-3">© 2019 Copyright: loGo
+  <a href="#">localhost:5000</a>
+</div>
+  <!-- Copyright -->
+</footer>
+<!-- Footer -->
 
 </body>
 </html>
