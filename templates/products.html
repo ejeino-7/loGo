@@ -17,6 +17,12 @@
 {% include 'navigation_meny.html' %}
 
 <div class="container-fluid">
+  <form style="width: 30%; margin: auto; margin-top: 8em;" class="form-search" action="" method="POST">
+      <label for="inputSearch" class="sr-only">Email address</label>
+      <input type="search" name="search" id="inputSearch class="form-control" placeholder="Something">
+      <button style="margin-top: 1em;"class="btn btn-lg btn-primary btn-block" type="submit">Search</button>
+  </form>
+  
   <h1 style="text-align:center;"class="h3 mb-3 font-weight-normal"><b>Products for sale</b></h1>
 
   {% for phone in products %}
