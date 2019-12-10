@@ -180,12 +180,13 @@ def products():
         cur.execute("SELECT * FROM products WHERE LOCATE(%s, Unit) > 0", [string(search)])
         container_products = cur.fetchall()
         cur.close()
+        return render_template('/products.html', products = container_products)
     else:
         cur = mysql.connection.cursor()
         cur.execute("SELECT * FROM products WHERE buyerID IS NULL;")
         products = cur.fetchall()
         cur.close()
-    return render_template('/products.html', products = container_products)
+    return render_template('/products.html', products = products)
     
    
 @app.route('/shoppingcart')
