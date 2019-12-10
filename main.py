@@ -177,7 +177,7 @@ def products():
     if(request.method == 'POST'):
         search = request.form['search']
         cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM products WHERE LOCATE(%s, title) > 0 AND buyerID IS NULL OR LOCATE(%s, desc) AND buyerID IS NULL", [str(search)])
+        cur.execute("SELECT * FROM products WHERE LOCATE(%s, title) > 0 AND buyerID IS NULL OR LOCATE(%s, desc) AND buyerID IS NULL", [str(search), str(search)])
         container_products = cur.fetchall()
         cur.close()
         return render_template('/products.html', products = container_products)
