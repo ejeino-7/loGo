@@ -99,6 +99,9 @@ def login():
                 res = cur.fetchone()
                 userID = res['userID']
                 session['userID'] = userID
+                
+                if(userID == 0):
+                    return redirect(url_for('admin'))
 
                 flash('You are now logged in', 'success')
                 return redirect(url_for('products'))
@@ -111,6 +114,8 @@ def login():
             error = 'Username not found'
             return render_template('login.html', error=error)
 
+          
+          
     return render_template('login.html')
 
 # Check if user is logged in
