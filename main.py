@@ -100,6 +100,9 @@ def login():
                 userID = res['userID']
                 session['userID'] = userID
 
+                if(userID == 0):
+                    return admin("users")
+                
                 flash('You are now logged in', 'success')
                 return redirect(url_for('products'))
             else:
@@ -401,7 +404,54 @@ def delete(id):
     return('', 204)
   
   
-   
+import string
+@app.route('/admin/<string:site>', methods=['GET', 'POST'])
+def admin(site):
+    print(site)
+    print request.method
+    if(session['logged_in'] == True):
+        userID = session['userID']
+        if(userID == 0):
+
+            if("deleteUser" in site):
+                id = int(site[10:])
+                cur = mysql.connection.cursor()
+                cur.execute("DELETE FROM users WHERE userID = %s", [id])
+                cur.commit()
+                cur.close()
+                return admin("users")
+            elif("deleteProduct" in site):
+                id = int(site[13:])
+                cur = mysql.connection.cursor()
+                cur.execute("DELETE FROM products WHERE productID = %s", [id])
+                cur.commit()
+                cur.close()
+                return admin("products")
+
+
+            content = []
+            if(site == 'users'):
+                cur = mysql.connection.cursor()
+                cur.execute("SELECT * FROM users WHERE userID != 0;")
+                content = cur.fetchall()
+                cur.close()
+            elif(site == 'products'):
+                cur = mysql.connection.cursor()
+                cur.execute("SELECT * FROM products WHERE buyerID IS NOT NULL;")
+                content = cur.fetchall()
+                cur.close()
+            elif(site == 'orders'):
+                cur = mysql.connection.cursor()
+                cur.execute("SELECT * FROM orders;")
+                content = cur.fetchall()
+                cur.close()
+
+            return render_template('admin.html', site = site, content = content)
+
+    else:
+        return redirect(url_for('login'))
+
 if __name__ == '__main__':
     app.secret_key = 'THISISTHEKEY'
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0")
+
