@@ -101,7 +101,7 @@ def login():
                 session['userID'] = userID
                 
                 if(userID == 0):
-                    return redirect(url_for('admin'))
+                    return redirect(url_for('admin/users'))
 
                 flash('You are now logged in', 'success')
                 return redirect(url_for('products'))
