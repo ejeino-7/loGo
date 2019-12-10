@@ -387,8 +387,52 @@ def delete(id):
 
     return('', 204)
   
-  
-   
+
+@app.route('/admin/<string:site>', methods=['POST', 'GET'])
+def admin(site):
+    if(session['logged_in'] == True):
+        userID = session['userID']
+        if(userID == 0):
+            if(method == 'POST'):
+                if(site.contains('deleteUser')):
+                    id = int(site[10:])
+                    cur = mysql.connection.cursor()
+                    cur.execute("DELETE FROM users WHERE userID = %s", [id])
+                    cur.commit()
+                    cur.close()
+                elif(site.contains('deleteProduct')):
+                    id = int(site[13:])
+                    cur = mysql.connection.cursor()
+                    cur.execute("DELETE FROM products WHERE productID = %s", [id])
+                    cur.commit()
+                    cur.close()
+                return redirect(url_for('admin/users'))
+            else:
+                content = []
+                if(site == 'users'):
+                    cur = mysql.connection.cursor()
+                    cur.execute("SELECT * FROM users WHERE userID != 0;")
+                    content = cur.fetchall()
+                    cur.close()
+                elif(site == 'products'):
+                    cur = mysql.connection.cursor()
+                    cur.execute("SELECT * FROM products WHERE buyerID IS NOT NULL;")
+                    content = cur.fetchall()
+                    cur.close()
+                elif(site == 'orders'):
+                    cur = mysql.connection.cursor()
+                    cur.execute("SELECT * FROM orders;")
+                    content = cur.fetchall()
+                    cur.close()
+
+            return render_template('/admin', site = site, content = content)
+
+    else:
+        return redirect(url_for('login'))
+
 if __name__ == '__main__':
     app.secret_key = 'THISISTHEKEY'
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0")
+
+  
+
