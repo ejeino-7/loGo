@@ -417,14 +417,14 @@ def admin(site):
                 id = int(site[10:])
                 cur = mysql.connection.cursor()
                 cur.execute("UPDATE users SET active = 0 WHERE userID = %s", [id])
-                cur.commit()
+                mysql.connection.commit()
                 cur.close()
                 return admin("users")
             elif("deleteProduct" in site):
                 id = int(site[13:])
                 cur = mysql.connection.cursor()
                 cur.execute("DELETE FROM products WHERE productID = %s", [id])
-                cur.commit()
+                mysql.connection.commit()
                 cur.close()
                 return admin("products")
 
