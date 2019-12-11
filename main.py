@@ -437,7 +437,7 @@ def admin(site):
                 cur.close()
             elif(site == 'products'):
                 cur = mysql.connection.cursor()
-                cur.execute("SELECT * FROM products WHERE buyerID IS NOT NULL;")
+                cur.execute("SELECT * FROM products WHERE buyerID IS NULL;")
                 content = cur.fetchall()
                 cur.close()
             elif(site == 'orders'):
