@@ -59,7 +59,10 @@ def register():
 
         # Create cursor
         cur = mysql.connection.cursor()
-
+ 
+        # Check if email or phonenumber already in use query
+        cur.execute("SELECT * FROM users WHERE phoneNumber=%s OR email=%s", (email, phone))       
+        row = cur.fetchone()
         # Execute query
         cur.execute("INSERT INTO users(email, phoneNumber, password) VALUES(%s, %s, %s)", (email, phone, password))
 
