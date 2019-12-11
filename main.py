@@ -96,17 +96,21 @@ def login():
 
             if sha256_crypt.verify(password_cand, password):
                 # Passed
-                session['logged_in'] = True
-                session['email'] = email
-                cur.execute("SELECT userID FROM users WHERE email = %s", [session['email']])
-                res = cur.fetchone()
-                userID = res['userID']
-                session['userID'] = userID
-
+                active = data['active']
+                if active:
+                    session['logged_in'] = True
+                    session['email'] = email
+                    cur.execute("SELECT userID FROM users WHERE email = %s", [session['email']])
+                    res = cur.fetchone()
+                    userID = res['userID']
+                    session['userID'] = userID
+                else:
+                    error = "This account has been suspended. For more info contact support."
+                    return render_template('login.html', error = error)
+                    
                 if(userID == 0):
                     return admin("users")
                 
-                flash('You are now logged in', 'success')
                 return redirect(url_for('products'))
             else:
                 error = 'Invalid login'
