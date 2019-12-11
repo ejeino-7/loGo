@@ -412,7 +412,7 @@ def admin(site):
             if("deleteUser" in site):
                 id = int(site[10:])
                 cur = mysql.connection.cursor()
-                cur.execute("DELETE FROM users WHERE userID = %s", [id])
+                cur.execute("UPDATE users SET active = 0 WHERE userID = %s", [id])
                 cur.commit()
                 cur.close()
                 return admin("users")
