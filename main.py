@@ -63,17 +63,17 @@ def register():
         # Check if email or phonenumber already in use query
         cur.execute("SELECT * FROM users WHERE phoneNumber=%s OR email=%s", (email, phone))       
         row = cur.fetchone()
+        if row:
+            error = "Email or phone number already in use"
+            return render_template('register.html', error = error)
         # Execute query
-        cur.execute("INSERT INTO users(email, phoneNumber, password) VALUES(%s, %s, %s)", (email, phone, password))
-
-        # Commit to DB
-        mysql.connection.commit()
+        else:
+            cur.execute("INSERT INTO users(email, phoneNumber, password) VALUES(%s, %s, %s)", (email, phone, password))
+            # Commit to DB
+            mysql.connection.commit()
 
         # Close connection
         cur.close()
-
-        flash('You are now registered and can log in', 'success')
-
         return redirect(url_for('login'))
     return render_template('register.html')
 
