@@ -444,6 +444,19 @@ def admin(site):
                 cur = mysql.connection.cursor()
                 cur.execute("SELECT * FROM orders;")
                 content = cur.fetchall()
+                
+                for sub in content:
+                    buyerID = sub['buyerID']
+                    sellerID = sub['sellerID']
+                    
+                    cur.execute("SELECT email FROM users WHERE userID = %s;", [buyerID])
+                    buyerName = cur.fetchone()
+                    cur.execute("SELECT email FROM users WHERE userID = %s;", [sellerID])
+                    sellerName = cur.fetchone()
+
+                    sub['buyerID'] = buyerName
+                    sub['sellerID'] = sellerName
+                
                 cur.close()
 
             return render_template('admin.html', site = site, content = content)
