@@ -440,6 +440,13 @@ def admin(site):
                 cur = mysql.connection.cursor()
                 cur.execute("SELECT * FROM products WHERE buyerID IS NULL;")
                 content = cur.fetchall()
+                
+                for sub in content:
+                    ownerID = sub['ownerID']
+                    cur.execute("SELECT email FROM users WHERE userID = %s", [ownerID])
+                    email = cur.fetchone()
+                    sub['ownerID'] = email['email'] 
+                
                 cur.close()
             elif(site == 'orders'):
                 cur = mysql.connection.cursor()
@@ -455,8 +462,8 @@ def admin(site):
                     cur.execute("SELECT email FROM users WHERE userID = %s;", [sellerID])
                     sellerName = cur.fetchone()
 
-                    sub['buyerID'] = buyerName
-                    sub['sellerID'] = sellerName
+                    sub['buyerID'] = buyerName['email']
+                    sub['sellerID'] = sellerName['email']
                 
                 cur.close()
 
