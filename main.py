@@ -432,7 +432,7 @@ def admin(site):
             content = []
             if(site == 'users'):
                 cur = mysql.connection.cursor()
-                cur.execute("SELECT * FROM users WHERE userID != 0; AND active = 1")
+                cur.execute("SELECT * FROM users WHERE userID != 0 AND active = 1")
                 content = cur.fetchall()
                 cur.close()
             elif(site == 'products'):
