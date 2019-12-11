@@ -188,7 +188,7 @@ def products():
         cur.execute("SELECT products.*, users.active FROM products INNER JOIN users ON products.ownerID = users.userID WHERE LOCATE(%s, title) > 0 AND buyerID IS NULL AND active = 1 OR LOCATE(%s, `desc`) AND buyerID IS NULL AND active = 1", [str(search), str(search)])
         container_products = cur.fetchall()
         cur.close()
-        return render_template('/products.html', products = container_products)]
+        return render_template('/products.html', products = container_products)
     else:
         cur = mysql.connection.cursor()
         cur.execute("SELECT products.*, users.active FROM products INNER JOIN users ON products.ownerID = users.userID WHERE buyerID IS NULL AND active = 1")
