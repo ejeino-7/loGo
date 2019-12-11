@@ -61,7 +61,7 @@ def register():
         cur = mysql.connection.cursor()
  
         # Check if email or phonenumber already in use query
-        cur.execute("SELECT * FROM users WHERE phoneNumber=%s OR email=%s", (email, phone))       
+        cur.execute("SELECT * FROM users WHERE phoneNumber=%s OR email=%s", (phone, email))       
         row = cur.fetchone()
         if row:
             error = "Email or phone number already in use"
