@@ -330,7 +330,8 @@ def editProduct(id):
 
             mysql.connection.commit()
             cur.close()
-
+ 
+       
         return redirect(url_for('myProducts'))
     else:
         if (session['logged_in'] == True):
@@ -340,7 +341,7 @@ def editProduct(id):
             cur.execute("SELECT * FROM products WHERE ownerID = %s AND productID = %s", (userID, id))
             phone = cur.fetchone()
             cur.close()
-
+            phone['price'] = int(phone['price'])
         return render_template('/editProduct.html', phone = phone)
 
 
