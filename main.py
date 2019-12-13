@@ -225,7 +225,7 @@ def addToCart(id):
     if(session['logged_in']):       
         cur = mysql.connection.cursor()
         userID = session['userID']
-        cur.execute("SELECT * FROM products WHERE buyerID=%s AND productID=%s", (userID, int(id)))       
+        cur.execute("SELECT * FROM products WHERE ownerID=%s AND productID=%s", (userID, int(id)))       
         row = cur.fetchone()
         if row:
             error = "You cannot buy your own products... "
