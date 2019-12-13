@@ -224,20 +224,13 @@ def shoppingcart():
 def addToCart(id):
     if(session['logged_in']):       
         cur = mysql.connection.cursor()
-        userID = session['userID']
-        cur.execute("SELECT * FROM products WHERE ownerID=%s AND productID=%s", (userID, int(id)))       
-        row = cur.fetchone()
-        if row:
-            error = "You cannot buy your own products... "
-            return render_template('product.html', error = error)
-        # Execute query
-        else:
-            cur.execute("SELECT price FROM products WHERE productID=%s", [int(id)])
-            price = cur.fetchone();
-            price = price['price']
-            cur.execute("INSERT IGNORE INTO shoppingCart(userID, productID, price) VALUES (%s, %s, %s)", (userID, int(id), price))
-            # Commit to DB
-            mysql.connection.commit()
+        userID = session['userID']  
+        cur.execute("SELECT price FROM products WHERE productID=%s", [int(id)])
+        price = cur.fetchone();
+        price = price['price']
+        cur.execute("INSERT IGNORE INTO shoppingCart(userID, productID, price) VALUES (%s, %s, %s)", (userID, int(id), price))
+        # Commit to DB
+        mysql.connection.commit()
         cur.close()
         return redirect(url_for('products'))
        
